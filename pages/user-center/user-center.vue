@@ -5,6 +5,10 @@
 </template>
 
 <script>
+
+import basePath from '../../api'
+
+console.log(basePath)
 export default{
 	data(){
 		return{
@@ -13,7 +17,6 @@ export default{
 	},
 	onLoad() {
 		this.permissionTest()
-		
 		this.reqTest()
 	},
 	methods: {
