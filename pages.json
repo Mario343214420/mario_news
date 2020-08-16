@@ -13,7 +13,13 @@
 			}
 		},
 		{
-			"path": "pages/login/login",
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/login/password",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}

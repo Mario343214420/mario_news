@@ -1,6 +1,17 @@
 <template>
 	<view>
 		user-center
+		<navigator url="/pages/register/register" open-type="navigate">
+			<button class="btn" type="primary">注册</button>
+		</navigator>
+		
+		<navigator url="/pages/login/password" open-type="navigate">
+			<button class="btn" type="primary">登录</button>
+		</navigator>
+		
+		<navigator url="/pages/login/code" open-type="navigate">
+			<button class="btn" type="primary">注册</button>
+		</navigator>
 	</view>
 </template>
 
@@ -37,7 +48,7 @@ export default{
 		},
 		reqTest(){
 			uni.request({
-				url:'http://192.168.0.219:4000',
+				url:'http://192.168.3.3:4000',
 				success:(res)=>{
 					console.log(res)
 				}
