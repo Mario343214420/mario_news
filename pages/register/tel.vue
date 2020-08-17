@@ -2,12 +2,12 @@
 	<view class="wrap">
 		<view class="top"></view>
 		<view class="content">
-			<view class="title">欢迎登录</view>
+			<view class="title">欢迎注册</view>
 			<input class="u-border-bottom" type="number" v-model="user.tel" placeholder="请输入手机号" />
 			<!-- <view class="tips">未注册的手机号验证后自动创建账号</view> -->
-			<button @tap="submit" :style="[inputStyle]" class="getCaptcha">获取短信验证码</button>
+			<button @tap="getCaptcha" :style="[inputStyle]" class="getCaptcha">获取短信验证码</button>
 			<view class="alternative">
-				<view class="password" @click="togglePwdLogin">密码登录</view>
+				<!-- <view class="password" @click="togglePwdLogin">密码登录</view> -->
 				<view class="issue">遇到问题</view>
 			</view>
 		</view>
@@ -33,7 +33,6 @@
 			}
 		},
 		onLoad() {
-			
 		},
 		computed: {
 			...mapState(['user']),
@@ -53,28 +52,20 @@
 				})
 			},
 			getCaptcha(){
+				let tel = this.$store.state.user.tel
 				uni.request({
 					method:'POST',
 					header:{'content-type': 'application/x-www-form-urlencoded'},
-					url:this.$path + '/telLogin',
+					url:this.$path + '/getCaptcha',
 					data:{
-						tel: this.$store.state.tel
+						tel: tel.toString()
 					},
 					success:(res)=>{
-						const {data} = res
-						if (data.code === 200) {
-							if(data.data === undefined){
-								uni.redirectTo({
-									url:'./register'
-								})
-							}else{
-								uni.redirectTo({
-									url:'./code'
-								})
-							}
-						}else{
-							console.log('网络出错')
-						}
+						const {code} = res.data.data
+						this.$store.state.captcha = code
+						uni.redirectTo({
+							url: './code'
+						})
 					}
 				})
 			},

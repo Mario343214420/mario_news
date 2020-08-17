@@ -19,7 +19,25 @@
 			}
 		},
 		{
+			"path": "pages/register/tel",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
+			"path": "pages/register/code",
+			"style": {
+				"navigationBarTitleText": "注册"
+			}
+		},
+		{
 			"path": "pages/login/password",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/login/tel",
 			"style": {
 				"navigationBarTitleText": "登录"
 			}
@@ -50,9 +68,10 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-		"color": "",
+		"color": "#4c4c4c",
 		"selectedColor": "#303133",
 		"backgroundColor":"#FFFFFF",
+		"fontSize": "60rpx",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
