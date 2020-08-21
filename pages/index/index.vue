@@ -46,23 +46,30 @@
 			</view>
 			<view class="gray-bar"></view>
 			<view class="tab-wrapper">
-				<u-tabs bg-color="#fafafa" :list="tabs"
-				@change="change" :current="current" :is-scroll="true"></u-tabs>
+				<u-tabs bg-color="#fafafa"
+				:list="tabs"
+				@change="change" 
+				:current="current" 
+				:is-scroll="true"></u-tabs>
 			</view>
 			<swiper class="swiper"
-			:style="'height: ' + 220 * (newsList.length + 1) + 'rpx'"
+			:style="'height: ' + 220 * (newsList0.length + 1) + 'rpx'"
 			:current="current"
 			:interval="interval"
-			:circular="true"
+			:circular="false"
+			@change="swiperPlay"
 			:duration="duration">
 				<swiper-item style="height: 600rpx;">
-					<pageList :list="newsList" style="height: 600rpx;"></pageList>
+					<pageList :list="newsList0" style="height: 600rpx;"></pageList>
 				</swiper-item>
 				<swiper-item>
-					<pageList :list="newsList"></pageList>
+					<pageList :list="newsList1"></pageList>
 				</swiper-item>
 				<swiper-item>
-					<pageList :list="newsList"></pageList>
+					<pageList :list="newsList2"></pageList>
+				</swiper-item>
+				<swiper-item>
+					<pageList :list="newsList3"></pageList>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -87,9 +94,102 @@
 				interval: 2000,
 				duration: 500,
 				toggleFlag: 0,
-				newsList: [
+				newsList0: [
+					{
+						title: '000模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
 					{
 						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+				],newsList1: [
+					{
+						title: '111模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+				],newsList2: [
+					{
+						title: '222模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+					{
+						title: '模拟新闻标题内容',
+						createTime: '2020-10-01',
+						description: '模拟新闻标题主要描述内容',
+						visitCount: '100'
+					},
+				],newsList3: [
+					{
+						title: '333模拟新闻标题内容',
 						createTime: '2020-10-01',
 						description: '模拟新闻标题主要描述内容',
 						visitCount: '100'
@@ -130,6 +230,9 @@
 		onLoad() {
 		},
 		methods: {
+			swiperPlay(e){
+				this.current = e.detail.current
+			},
 			changeIndicatorDots(e) {
 				this.indicatorDots = !this.indicatorDots
 			},
@@ -272,6 +375,8 @@
 		font-size 30rpx
 .swiper-wrapper
 	height: 200rpx;
+.u-scroll-box
+	display flex
 .card-title
 	font-weight 700
 	font-size 40rpx

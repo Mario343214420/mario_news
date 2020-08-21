@@ -1,17 +1,17 @@
 <template>
-	<view class="wrap">
+	<!-- <view class="wrap">
 		<view class="top"></view>
 		<view class="content">
 			<view class="title">欢迎登录</view>
 			<input class="u-border-bottom" type="number" v-model="user.tel" placeholder="请输入手机号" />
-			<!-- <view class="tips">未注册的手机号验证后自动创建账号</view> -->
-			<button @tap="submit" :style="[inputStyle]" class="getCaptcha">获取短信验证码</button>
+			<view class="tips">未注册的手机号验证后自动创建账号</view>
+			<button @tap="getCaptcha" :style="[inputStyle]" class="getCaptcha">获取短信验证码</button>
 			<view class="alternative">
 				<view class="password" @click="togglePwdLogin">密码登录</view>
 				<view class="issue">遇到问题</view>
 			</view>
 		</view>
-		<!-- <view class="buttom">
+		<view class="buttom">
 			<view class="loginType">
 				<view class="wechat item">
 					<view class="icon"><u-icon size="70" name="weixin-fill" color="rgb(83,194,64)"></u-icon></view>
@@ -22,7 +22,31 @@
 					QQ
 				</view>
 			</view>
-		</view> -->
+		</view>
+	</view> -->
+	<view class="main-container">
+		<view class="box">
+			<view class="logo">
+				<u-image width="200rpx" height="200rpx" src="/static/icon/logo.png"></u-image>
+				<text>新云信用</text>
+			</view>
+			<view style="display: flex;">
+				<view style="flex: 1;">
+					<u-input style="margin-right: 60rpx;" v-model="user.tel" placeholder="手机号" :border="false" />
+					<u-line color="#e4e7ed" />
+				</view>
+				<u-button size="medium" @tap="getCaptcha">获取验证码</u-button>
+			</view>	
+			<view>
+				<u-message-input mode="middleLine" :maxlength="6" :value="val"></u-message-input>
+			</view>
+			<view>	
+				<u-button type="primary" @click="login">登录</u-button>
+			</view>
+			<view>	
+				<text class="toggle-login-type" @click="togglePwdLogin">点击切换登录方式</text>
+			</view>
+		</view>
 	</view>
 </template>
 <script>
@@ -30,10 +54,10 @@
 	export default{
 		data(){
 			return{
+				val: ''
 			}
 		},
 		onLoad() {
-			
 		},
 		computed: {
 			...mapState(['user']),
@@ -52,38 +76,57 @@
 					url: './password'
 				})
 			},
-			getCaptcha(){
+			/* finish(e) {
 				uni.request({
 					method:'POST',
 					header:{'content-type': 'application/x-www-form-urlencoded'},
 					url:this.$path + '/telLogin',
 					data:{
-						tel: this.$store.state.tel
+						tel: tel.toString()
 					},
 					success:(res)=>{
 						const {data} = res
-						if (data.code === 200) {
-							if(data.data === undefined){
-								uni.redirectTo({
-									url:'./register'
-								})
-							}else{
-								uni.redirectTo({
-									url:'./code'
-								})
-							}
-						}else{
-							console.log('网络出错')
+						if(data.code === 200){
+							this.$store.state.captcha = data.num
+							console.log(data)
+						}
+					}
+				})
+			}, */
+			getCaptcha(){
+				let tel = this.$store.state.user.tel
+				uni.request({
+					method:'POST',
+					header:{'content-type': 'application/x-www-form-urlencoded'},
+					url:this.$path + '/getCaptcha',
+					data:{
+						tel: tel.toString()
+					},
+					success:(res)=>{
+						const {data} = res
+						if(data.code === 200){
+							this.$store.state.captcha = data.num
 						}
 					}
 				})
 			},
-			submit() {
-				if(this.$u.test.mobile(this.tel)) {
-					this.$u.route({
-						url: 'pages/login/code'
-					})
-				}
+			login(){
+				let tel = this.$store.state.user.tel
+				uni.request({
+					method:'POST',
+					header:{'content-type': 'application/x-www-form-urlencoded'},
+					url:this.$path + '/telLogin',
+					data:{
+						tel: tel.toString()
+					},
+					success:(res) => {
+						const {data} = res.data
+						this.$store.state.user = data.user
+						uni.switchTab({
+							url: '/pages/index/index'
+						})
+					}
+				})
 			}
 		}
 		
@@ -157,4 +200,30 @@
 		}
 	}
 }
+.u-size-medium
+	padding 0 20px
+.main-container
+	display flex
+	// height: 100%;
+	min-height 1000rpx
+	flex-direction column
+	align-items center
+	justify-content space-around
+	.box
+		width: 80%;
+		display flex
+		justify-content space-between
+		flex-direction column
+		height 800rpx
+		.logo
+			display flex
+			flex-direction column
+			justify-content center
+			align-items center
+			text
+				font-size: 30rpx;
+		.btn
+			margin-top: 60rpx;
+		.toggle-login-type
+			font-size: 30rpx;
 </style>

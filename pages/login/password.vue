@@ -1,12 +1,24 @@
 <template>
 	<view class="main-container">
 		<view class="box">
-			<text>用户名：</text>
-			<input placeholder="输入用户名" v-model="username"/>
-			<text>密码：</text>
-			<input placeholder="输入用户密码" v-model="password"/>
-			<button class="btn" type="primary" @click="login(username,password)">登录</button>
-			<text class="toggle-login-type" @click="toggleTelLogin">点击切换登录方式</text>
+			<view class="logo">
+				<u-image width="200rpx" height="200rpx" src="/static/icon/logo.png"></u-image>
+				<text>新云信用</text>
+			</view>
+			<view>			
+				<u-input v-model="username" placeholder="用户名" :border="false" />
+				<u-line color="#e4e7ed" />
+			</view>	
+			<view>	
+				<u-input v-model="password" placeholder="密码" :border="false" />
+				<u-line color="#e4e7ed" />
+			</view>
+			<view>	
+				<u-button type="primary" @click="login(username,password)">登录</u-button>
+			</view>
+			<view>	
+				<text class="toggle-login-type" @click="toggleTelLogin">点击切换登录方式</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -76,12 +88,17 @@
 		justify-content space-around
 		.box
 			width: 80%;
-			>*
-				line-height: 100rpx;
-				margin 10rpx 60rpx
-				font-size: 40rpx;
-			input
-				background-color: #f1f1f1;
+			display flex
+			justify-content space-between
+			flex-direction column
+			height 800rpx
+			.logo
+				display flex
+				flex-direction column
+				justify-content center
+				align-items center
+				text
+					font-size: 30rpx;
 			.btn
 				margin-top: 60rpx;
 			.toggle-login-type

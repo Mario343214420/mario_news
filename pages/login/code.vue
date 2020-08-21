@@ -2,7 +2,7 @@
 	<view class="wrap">
 		<view class="key-input">
 			<view class="title">输入验证码</view>
-			<view class="tips">验证码已发送至 +150****9320</view>
+			<view class="tips">验证码已发送至 +{{encryptTel}}</view>
 			<u-message-input :focus="true" :value="value" @change="change" @finish="finish" mode="bottomLine" :maxlength="maxlength"></u-message-input>
 			<text :class="{ error: error }">验证码错误，请重新输入</text>
 			<view class="captcha">
@@ -14,17 +14,23 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
 	data() {
 		return {
-			maxlength: 4,
+			maxlength: 6,
 			value: '',
 			second: 3,
 			show: false,
 			error: false
 		};
 	},
-	computed: {},
+	computed: {
+		...mapState(['user']),
+		encryptTel(){
+			return (this.user.tel+'').substr(0,3) + '****' + (this.user.tel+'').substr(7,4)
+		}
+	},
 	onLoad() {
 		// this.getCaptcha()
 		let interval = setInterval(() => {
@@ -58,6 +64,12 @@ export default {
 		// 输入完验证码最后一位执行
 		finish(value) {
 			// console.log('finish', value);
+			if(value === this.$store.state.captcha){
+				console.log('登录成功')
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
+			}
 		}
 	}
 };
@@ -65,7 +77,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrap {
-	padding: 80rpx;
+	padding: 40rpx;
 }
 
 .box {

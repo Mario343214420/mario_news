@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view v-if="this.$store.state.user.username !== ''">
+		<view v-if="this.$store.state.user.username">
 			<text>欢迎您，{{this.$store.state.user.username}}</text><br>
 			<text @click="exit">退出登录</text>
 		</view>
@@ -11,9 +11,11 @@
 			<navigator url="/pages/login/password" open-type="navigate">
 				<button class="btn" type="primary">登录</button>
 			</navigator>
-			
 			<navigator url="/pages/register/tel" open-type="navigate">
 				<button class="btn" type="primary">短信注册</button>
+			</navigator>
+			<navigator url="/pages/login/tel" open-type="navigate">
+				<button class="btn" type="primary">短信登录</button>
 			</navigator>
 		</view>
 	</view>
@@ -36,16 +38,16 @@ export default{
 			uni.removeStorage({
 				key: 'user',
 				success: (res)=>{
-					console.log(res)
+					console.log('删除本地存储个人信息')
 				}
 			})
-			this.$store.state.user.username = ''
+			this.$store.state.user = {}
 		},
 		verifyLoginState(){
 			uni.getStorage({
 				key: 'username',
 				success: (res) => {
-					this.$store.state.user.username = res.data
+					this.$store.state.user = res.data
 					// console.log(this.$store.state.user.username)
 				}
 			})
@@ -73,6 +75,33 @@ export default{
 				}
 			})
 		}
+		/*,
+		getWx(){
+			uni.getProvider({
+				service: 'oauth',
+				success: function(res) {
+					console.log(res);
+					//支持微信、qq和微博等
+					if (~res.provider.indexOf('weixin')) {
+						uni.login({
+							provider: 'weixin',
+							success: function(loginRes) {
+								console.log('-------获取openid(unionid)-----');
+								console.log(JSON.stringify(loginRes));
+								// 获取用户信息
+								uni.getUserInfo({
+									provider: 'weixin',
+									success: function(infoRes) {
+										console.log('-------获取微信用户所有-----');
+										console.log(JSON.stringify(infoRes.userInfo));
+									}
+								});
+							}
+						});
+					}
+				}
+			});
+		}*/
 	}
 }
 </script>

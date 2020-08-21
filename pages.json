@@ -33,13 +33,13 @@
 		{
 			"path": "pages/login/password",
 			"style": {
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": "账号登录"
 			}
 		},
 		{
 			"path": "pages/login/tel",
 			"style": {
-				"navigationBarTitleText": "登录"
+				"navigationBarTitleText": "手机登录"
 			}
 		},
 		{
@@ -62,16 +62,21 @@
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#DD524D",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTextStyle": "black",
+		// "navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "transparent",
+		"backgroundColor": "transparent",
+		"app-plus": {
+			"titleNView": {
+				"backButton": ""
+			}
+		}
 	},
 	"tabBar": {
 		"color": "#4c4c4c",
 		"selectedColor": "#303133",
 		"backgroundColor":"#FFFFFF",
-		"fontSize": "60rpx",
+		"fontSize": "20px",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
