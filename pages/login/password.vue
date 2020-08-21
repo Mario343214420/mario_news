@@ -52,16 +52,15 @@
 					success:(res)=>{
 						const {data} = res
 						if (data.code === 200) {
-							console.log(1)
 							uni.switchTab({
 								url:'/pages/index/index'
 							})
+							console.log(res)
 							uni.setStorage({
-								key: 'username',
+								key: 'user',
 								data: name,
 								success:(res)=>{
-									console.log('setStorage',res)
-									this.$store.state.user.username = name
+									this.$store.state.user = data.data
 								},
 								fail: (res)=>{
 									console.log('fail')

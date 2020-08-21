@@ -1,9 +1,18 @@
 <template>
 	<view class="content">
 		<view class="head">
+			<view class="tip-wrapper" @click="camera">
+				<u-icon name="scan"></u-icon>
+			</view>
+			<view class="tool-wrapper">
+				<view></view>
+				<view class="sys-name"><text>APP名称预留</text></view>
+				<view class="sys-name-e"><text>application name</text></view>
+			</view>
 			<view class="toggle-wrapper">
 				<view :class="toggleFlag === 0? 'active default' : 'default'" @click="toggleFlag = 0">信用信息</view>
-				<view :class="toggleFlag === 1? 'active default' : 'default'" @click="toggleFlag = 1">站内文章</view>
+				<view :class="toggleFlag === 1? 'active default' : 'default'" @click="toggleFlag = 1">统一社会信用代码</view>
+				<view :class="toggleFlag === 2? 'active default' : 'default'" @click="toggleFlag = 2">文章</view>
 			</view>
 			<view class="toggle-input">
 				<u-search placeholder="请输入搜索内容" v-model="keyword" shape="square"></u-search>
@@ -11,35 +20,37 @@
 		</view>
 		<view class="gray-bar"></view>
 		<view class="body">
-			<view class="card-title">信息公示</view>
+			<view class="card-title">推荐服务</view>
 			<view class="swiper-wrapper">
 				<swiper class="swiper"
+				style="height: 120px;"
 				:interval="interval"
 				:display-multiple-items="4"
 				:circular="true"
+				:indicator-dots="true"
 				:duration="duration">
 					<swiper-item>
 						<view class="swiper-item">
-							<image src="../../static/icon/icon_xydm.png" alt="">
-							<i>信用代码</i>
+							<view class="square" style="background-color: #2bcfcf;"></view>
+							<i>我的信用</i>
 						</view>
 					</swiper-item>
 					<swiper-item>
 						<view class="swiper-item">
-							<image src="../../static/icon/icon_xydm.png" alt="">
-							<i>信用代码</i>
+							<view class="square" style="background-color: #0d85ff;"></view>
+							<i>信用公示</i>
 						</view>
 					</swiper-item>
 					<swiper-item>
 						<view class="swiper-item">
-							<image src="../../static/icon/icon_xydm.png" alt="">
-							<i>信用代码</i>
+							<view class="square" style="background-color: #2f54eb;"></view>
+							<i>授权查询</i>
 						</view>
 					</swiper-item>
 					<swiper-item>
 						<view class="swiper-item">
-							<image src="../../static/icon/icon_xydm.png" alt="">
-							<i>信用代码</i>
+							<view class="square" style="background-color: #7948ea;"></view>
+							<i>信用报告</i>
 						</view>
 					</swiper-item>
 				</swiper>
@@ -230,6 +241,17 @@
 		onLoad() {
 		},
 		methods: {
+			camera(){
+				// 相机
+				/* var cmr = plus.camera.getCamera();
+				cmr.captureImage() */
+				// 扫码
+				uni.scanCode({
+					success:function(res){
+						console.log(JSON.stringify(res.result));
+					}
+				});
+			},
 			swiperPlay(e){
 				this.current = e.detail.current
 			},
@@ -316,15 +338,27 @@
 
 <style lang="stylus">
 .head
-	background-image: url(../../static/images/top_bg.png);
-	background-size 100% auto
-	background-repeat: no-repeat;
-	background-color: #DD524D;
-	height: 170rpx;
-	padding-top: 150rpx;
+	background-color: #0d85ff;
+	padding-bottom 40rpx
+	position relative
+	.tip-wrapper
+		position absolute
+		right 40rpx
+		top: 40rpx;
+	.tool-wrapper
+		height 180rpx
+		display flex
+		justify-content center
+		flex-direction column
+		padding 0 40rpx
+		.sys-name
+			color #FFFFFF
+			font-size: 34rpx;
+		.sys-name-e
+			color #FFFFFF
+			font-size 26rpx
 	.toggle-wrapper
 		display flex
-		border-radius: 5px;
 		overflow hidden
 		width: 90%;
 		margin 0 auto
@@ -332,18 +366,18 @@
 			text-align center
 			line-height: 60rpx;
 			width: 50%;	
-			color #DD524D
-			font-weight: 700;
-			font-size: 32rpx;
-			background-color: #FFFFFF;
-		.active
 			color #FFFFFF
-			background-color: #DD524D;
+			font-weight: 700;
+			font-size: 24rpx;
+		.active
+			color #333333
+			background-color: #FFFFFF;
+			border-radius: 20rpx 20rpx 0 0;
 	.toggle-input
 		width 90%
-		margin 20rpx auto
+		margin 0 auto
 		overflow hidden
-		border-radius: 6rpx;
+		border-radius:0 0 6rpx 6rpx;
 		display flex
 		align-items center
 		line-height 80rpx
@@ -355,6 +389,8 @@
 		input
 			padding 0 20rpx
 			flex: 1px;
+		.u-content
+			border-radius: 0;
 .body
 	display flex
 	flex-direction column
@@ -368,18 +404,21 @@
 	flex-direction column
 	align-items center
 	padding-top 20rpx
+	.square
+		width: 80rpx;
+		height: 80rpx;
+		border-radius 10rpx
+		margin 20rpx 0
 	image
 		width 100rpx
 		height 100rpx
 	i
 		font-size 30rpx
-.swiper-wrapper
-	height: 200rpx;
 .u-scroll-box
 	display flex
 .card-title
 	font-weight 700
-	font-size 40rpx
+	font-size 34rpx
 	line-height 80rpx
 	height: 80rpx;
 	padding-left: 20rpx;

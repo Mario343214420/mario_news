@@ -29,9 +29,9 @@
 	padding 30rpx
 	.item-title
 		font-weight 700
-		font-size: 34rpx;
+		font-size: 32rpx;
 	.item-description
-		font-size: 30rpx;
+		font-size: 28rpx;
 	.item-tip
 		display flex
 		width 100%

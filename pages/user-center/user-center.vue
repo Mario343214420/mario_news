@@ -1,56 +1,82 @@
 <template>
 	<view class="container">
-		<view v-if="this.$store.state.user.username">
-			<text>欢迎您，{{this.$store.state.user.username}}</text><br>
-			<text @click="exit">退出登录</text>
+		<view v-if="user.username">
+			<view class="top-wrapper">
+				<text>欢迎您，{{user.username}}</text><br>
+				<text class="exit-text" @click="exit">退出登录</text>
+			</view>
+			<view class="mid-wrapper">
+				<view class="avt-container">
+					
+				</view>
+				<view class="u-body-item u-flex u-border-bottom u-col-between u-p-t-0">
+					<view class="u-body-item-title u-line-2">
+						<u-icon name="account-fill"></u-icon>
+						<text>{{user.username}}</text>
+					</view>
+				</view>
+				<view class="u-body-item u-flex u-row-between u-p-b-0">
+					<view class="u-body-item-title u-line-2">
+						<u-icon name="phone-fill"></u-icon>
+						<text>{{user.tel}}</text>
+					</view>
+				</view>
+			</view>
+			
+			<u-card >
+				
+			</u-card>
 		</view>
 		<view v-else>
-			<navigator url="/pages/register/register" open-type="navigate">
-				<button class="btn" type="primary">注册</button>
-			</navigator>
-			<navigator url="/pages/login/password" open-type="navigate">
-				<button class="btn" type="primary">登录</button>
-			</navigator>
-			<navigator url="/pages/register/tel" open-type="navigate">
-				<button class="btn" type="primary">短信注册</button>
-			</navigator>
-			<navigator url="/pages/login/tel" open-type="navigate">
-				<button class="btn" type="primary">短信登录</button>
-			</navigator>
+			<text>请登录后访问个人信息页</text>
+			<view>
+				<navigator url="/pages/register/register" open-type="navigate">
+					<button class="btn">注册</button>
+				</navigator>
+				<navigator url="/pages/login/password" open-type="navigate">
+					<button class="btn">登录</button>
+				</navigator>
+				<navigator url="/pages/register/tel" open-type="navigate">
+					<button class="btn">短信注册</button>
+				</navigator>
+				<navigator url="/pages/login/tel" open-type="navigate">
+					<button class="btn">短信登录</button>
+				</navigator>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default{
 	data(){
 		return{
 			
 		}
 	},
-	onLoad() {
-		// this.permissionTest()
-		// this.reqTest()
-		this.verifyLoginState()
+	computed:{
+		...mapState(['user'])
 	},
 	methods: {
 		exit(){
 			uni.removeStorage({
 				key: 'user',
 				success: (res)=>{
-					console.log('删除本地存储个人信息')
+					// console.log(res)
 				}
 			})
 			this.$store.state.user = {}
+			uni.switchTab({
+				url: '/pages/index/index'
+			})
 		},
 		verifyLoginState(){
-			uni.getStorage({
-				key: 'username',
-				success: (res) => {
-					this.$store.state.user = res.data
-					// console.log(this.$store.state.user.username)
-				}
-			})
+			if(this.$store.state.user.name){
+				uni.redirectTo({
+					url:'../login/password'
+				})
+			}
 		},
 		permissionTest(){
 			uni.getStorage({
@@ -108,9 +134,48 @@ export default{
 
 <style lang="stylus" scoped>
 	.container
-		padding 80rpx
+		background-color: #f8f8f8;
+		min-height 800rpx
 		.btn
 			margin 40rpx 0
 			height: 60rpx;
 			line-height: 60rpx;
+		.top-wrapper
+			padding 40rpx
+			color #FFFFFF
+			width: 100%;
+			box-sizing border-box
+			background-color: #0D85FF;
+			display flex
+			justify-content space-between
+			.exit-text
+				font-size 30rpx
+				
+		>>>.u-icon__icon
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			border-radius: 50%;
+			margin-right 20rpx
+			background-color: #fff;
+			color #0D85FF
+			padding 6rpx
+		.mid-wrapper
+			@extend .top-wrapper
+			position relative
+			display block
+			line-height 80rpx
+			font-size 30rpx
+			-webkit-border-radius: 0 0 20rpx 20rpx;
+			-moz-border-radius: 0 0 20rpx 20rpx;
+			border-radius: 0 0 20rpx 20rpx;
+			.avt-container
+				position absolute
+				bottom -80rpx
+				right 80rpx
+				width 160rpx
+				height: 160rpx;
+				background-color: #FFFFFF;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				border-radius: 50%;
 </style>
