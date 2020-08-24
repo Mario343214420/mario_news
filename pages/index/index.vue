@@ -1,8 +1,9 @@
 <template>
 	<view class="content">
 		<view class="head">
-			<view class="tip-wrapper" @click="camera">
-				<u-icon name="scan"></u-icon>
+			<view class="tip-wrapper">
+				<u-icon name="scan" @click="scan"></u-icon>
+				<u-icon name="camera" @click="camera"></u-icon>
 			</view>
 			<view class="tool-wrapper">
 				<view></view>
@@ -95,7 +96,7 @@
 </template>
 
 <script>
-	import pageList from '../../component/page-list/page-list.vue'
+	import pageList from '../../components/page-list/page-list.vue'
 	export default {
 		data() {
 			return {
@@ -136,7 +137,8 @@
 						description: '模拟新闻标题主要描述内容',
 						visitCount: '100'
 					},
-				],newsList1: [
+				],
+				newsList1: [
 					{
 						title: '111模拟新闻标题内容',
 						createTime: '2020-10-01',
@@ -167,7 +169,8 @@
 						description: '模拟新闻标题主要描述内容',
 						visitCount: '100'
 					},
-				],newsList2: [
+				],
+				newsList2: [
 					{
 						title: '222模拟新闻标题内容',
 						createTime: '2020-10-01',
@@ -198,7 +201,8 @@
 						description: '模拟新闻标题主要描述内容',
 						visitCount: '100'
 					},
-				],newsList3: [
+				],
+				newsList3: [
 					{
 						title: '333模拟新闻标题内容',
 						createTime: '2020-10-01',
@@ -228,7 +232,7 @@
 						createTime: '2020-10-01',
 						description: '模拟新闻标题主要描述内容',
 						visitCount: '100'
-					},
+					}
 				],
 				tabs: [{name: '信用动态'},{name: '政策法规'},{name: '典型案例'},{name: '专项治理'}],
 				current: 0,
@@ -241,16 +245,38 @@
 		onLoad() {
 		},
 		methods: {
-			camera(){
-				// 相机
-				/* var cmr = plus.camera.getCamera();
-				cmr.captureImage() */
+			scan(){
 				// 扫码
 				uni.scanCode({
 					success:function(res){
 						console.log(JSON.stringify(res.result));
 					}
 				});
+			},
+			camera(){
+				// 相机
+				/* var cmr = plus.camera.getCamera();
+				cmr.captureImage() */
+				uni.chooseImage({
+				    count: 6,
+				    sizeType: ['original', 'compressed'],
+				    sourceType: ['album'],
+				    success: function(res) {
+				        // 预览图片
+				        uni.previewImage({
+				            urls: res.tempFilePaths,
+				            longPressActions: {
+				                itemList: ['发送给朋友', '保存图片', '收藏'],
+				                success: function(data) {
+				                    console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+				                },
+				                fail: function(err) {
+				                    console.log(err.errMsg);
+				                }
+				            }
+				        });
+				    }
+				    });
 			},
 			swiperPlay(e){
 				this.current = e.detail.current
@@ -339,12 +365,17 @@
 <style lang="stylus">
 .head
 	background-color: #0d85ff;
+	padding-top: 20rpx;
 	padding-bottom 40rpx
 	position relative
 	.tip-wrapper
 		position absolute
 		right 40rpx
-		top: 40rpx;
+		top: 80rpx;
+		width 120rpx
+		display flex
+		justify-content space-around
+		color #FFFFFF
 	.tool-wrapper
 		height 180rpx
 		display flex

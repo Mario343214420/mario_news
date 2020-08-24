@@ -28,8 +28,10 @@
 			</u-card>
 		</view>
 		<view v-else>
-			<text>请登录后访问个人信息页</text>
-			<view>
+			<view style="text-align: center; padding-top: 100rpx;">
+				<text>请登录后访问个人信息页</text>
+			</view>
+			<view style="margin: 0 auto; width: 60%;">
 				<navigator url="/pages/register/register" open-type="navigate">
 					<button class="btn">注册</button>
 				</navigator>
